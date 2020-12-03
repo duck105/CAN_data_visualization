@@ -21,54 +21,30 @@
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/highcharts-more.js"></script>
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
-
 </head>
 
 <body>
-
-    <div class="jumbotron">
-        <h1 class="text-center text-">NTU Racing Team Realtime Sensor Visualization</h1>
-    </div>
-    
-    <br>
-    <br>
-
-	<h3>Velocity:</h3>
-    <div id = "Value_Velocity">
+    <div class="jumbotron text-center">
+        <h1>NTU Racing Realtime Sensor Visualization</h1>      
     </div>
 
-    <br>
-    <br>
-
-    <div class="container-fluid">
-        <!-- Example row of columns -->
+    <div class="container">
+        <h3>Velocity:</h3>
         <div class="row">
             <div class="container-fluid" id="data-Velocity">
-
             </div>
         </div>
     </div>
-<br>
-<br>
-<br>
+    <br>
 
-    <hr class="my-4">
-
-    <div>
-	<h3>SoC:</h3>
-
-    </div>
-
-    <div class="container-fluid">
-        <!-- Example row of columns -->
+    <div class="container">
+        <h3>SoC:</h3>
         <div class="row">
             <div class="container-fluid" id="data-SOC">
-
             </div>
         </div>
     </div>
 
-    <hr class="my-4">
 
     <script>
         var chartVelocity;
@@ -108,7 +84,7 @@
 
 
                 // call it again after one second
-                setTimeout(requestData, 100);
+                // setTimeout(requestData, 100);
 
             });
         }
@@ -189,53 +165,6 @@
 
         });
     </script>
-
-
-
-<script>
-    class Image{
-
-        constructor(imgUrl, size)
-        {
-            this.imgUrl=imgUrl;
-            this.size=size;
-        }
-
-        backgroundImage()
-        {
-            console.log("inside function ")
-            // Select the Image
-            var img = document.querySelector(".jumbotron");
-            // create Css Text
-            var text = "margin:auto;"+
-                "background-image: url("+this.ingUrl+");" +
-                "background-size:cover;"+
-                "opacity:1;"+
-                "background-blend-mode: darken;"+
-                "height: "+ this.size + "vh;";
-
-            img.style.cssText =  text;
-        }
-
-        centerTitle()
-        {
-            /*
-                Center the Title
-             */
-            var t1 = document.querySelector("#title");
-            t1.classList.add("text-white");
-            t1.classList.add("text-center");
-            t1.classList.add("display-3");
-        }
-    }
-    const imgUrl = 'https://i.imgur.com/uJp6rlp.jpg'
-    const size = "30";
-    var obj = new Image(imgUrl, size);
-    obj.backgroundImage();
-    obj.centerTitle();
-    </script>
-
-
 </body>
 
 
