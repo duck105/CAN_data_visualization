@@ -57,9 +57,11 @@
 
             var ve = requests.done(function (result)
             {
+
                 // Velocity
-                var seriesVelocity = chartVelocity.series[0],
-                    shiftVelocity = seriesVelocity.data.length > 400;
+                var seriesVelocity = chartVelocity.series[0];
+                var shiftVelocity = seriesVelocity.data.length > 400;
+                console.log(seriesVelocity.data)
 
                 // SOC
                 var seriesSOC = chartSOC.series[0],
@@ -67,20 +69,25 @@
 
                 // Add the Point
                 // Time - Velocity
-                var data1 = [];
-                data1.push(result[0]);
-                data1.push(result[1]);
+                for (let i = 0; i < result.length; i++) {
+                    var data1 = [];
+                    data1.push(result[i][0]);
+                    data1.push(result[i][1]);
+                    // console.log(data1)
+                    chartVelocity.series[0].addPoint(data1, true, shiftVelocity);
+                }
+                    
 
 
                 // Add the Point
                 // Time - SOC
-                var data2 = [];
-                data2.push(result[0]);
-                data2.push(result[2]);
-
-
-                chartVelocity.series[0].addPoint(data1, true, shiftVelocity);
-                chartSOC.series[0].addPoint(data2, true, shiftSOC);
+                for (let i = 0; i < result.length; i++) {
+                    var data2 = [];
+                    data2.push(result[i][0]);
+                    data2.push(result[i][2]);
+                    // console.log(data1)
+                    chartSOC.series[0].addPoint(data2, true, shiftSOC);
+                }
 
 
                 // call it again after one second
@@ -118,11 +125,12 @@
                         margin: 80
                             }
                          },
+
                 series: [{
                     color : '#c23d23',
                     lineColor: '#303030',
                     name: 'Velocity',
-                    data: []
+                    data: [],
                 }]
             });
             // --------------Chart 1 Ends -----------------------
