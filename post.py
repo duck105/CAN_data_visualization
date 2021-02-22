@@ -1,3 +1,4 @@
+# 跑在Rpi 上負責送資料過去server的code 
 import requests
 import time
 from random import random
@@ -5,7 +6,7 @@ from random import random
 def post_data(id):
     URL = "http://localhost:5000/points"
 
-    # data to be sent to api 
+    # data to be sent to server 
     data = {'id': id,
             'time': time.time()*1000, 
             'velocity': id,
