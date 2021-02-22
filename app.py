@@ -3,7 +3,6 @@ import random
 import json
 import time
 from random import random
-import pandas as pd
 
 app = Flask(__name__)
 
