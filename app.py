@@ -1,34 +1,51 @@
-from flask import Flask,render_template,url_for,request,redirect, make_response
+from flask import Flask, render_template, jsonify, abort, request
 import random
 import json
-from time import time
+import time
 from random import random
-from flask import Flask, render_template, make_response
 import pandas as pd
 
 app = Flask(__name__)
 
+data_points = [
+    {   
+        'id': 0,
+        'time': time.time()*1000,
+        'velocity': 100,
+        'soc': 50
+    }
+]
+
+# 首頁(realtime 資料)
 @app.route('/', methods=["GET"])
 def main():
     return render_template('index.html')
 
+# 歷史資料，未完成
+@app.route('/analysis', methods=["GET"])
+def render_analysis():
+    return render_template('analysis.html')
 
+# 接收Rpi上傳的資料
+@app.route('/points', methods=["POST"])
+def create_data():
+    if not request.json or not 'time' in request.json:
+        abort(400)
+    
+    point = {
+        'id': request.json['id'],
+        'time': request.json['time'],
+        'velocity': request.json['velocity'],
+        'soc': request.json['soc']
+    }
+    data_points.append(point)
+    return jsonify(point), 201
+
+# 前端(index.html) 獲取資料，每次都只拿最新一筆加入圖表中
 @app.route('/data', methods=["GET"])
-def data():
-    # Data Format [ Time, Velocity, SOC]
-
-    df = pd.read_csv("Arduino1_decode.csv")
-    n = 40000
-    diff = 2500
-    datas = [list(a) for a in zip(list(df.iloc[:n:diff, 0]), list(df.iloc[:n:diff, 6]), list(df.iloc[:n:diff, 1]))]
-    print(len(datas))
-
-    response = make_response(json.dumps(datas))
-
-    response.content_type = 'application/json'
-
-    return response
-
+def get_data():
+    # Data Format {'time': t, 'velocity': v, 'soc': soc}
+    return jsonify(data_points[-1])
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
